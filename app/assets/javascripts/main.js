@@ -56,10 +56,13 @@ function makeCalendar () {
   // Get the first day of the week in set month and year: 0=Su, 1=Mo, 2=Tu, etc
   var firstDay = new Date(currY, currM, 1).getDay();
   // Get number of days in a month
-  var daysMonth = new Date(currY, currM, 0).getDate();
+  //var daysMonth = new Date(currY, currM, 0).getDate();
+  var monthStart = new Date(currY, currM, 1);
+  var monthEnd = new Date(currY, currM + 1, 1);
+  var daysMonth = Math.round( (monthEnd - monthStart) / (1000 * 60 * 60 * 24) );
   //Creating the days in a month, taking into account the firstDay of the week
   loop1:
-   for (n = 1; n < 6; n++) {
+   for (n = 1; n < 7; n++) {
      //Creating new tr's with row id
      r = document.getElementById('calendar').appendChild(document.createElement("tr"));
      r.setAttribute("id", "row"+n);
