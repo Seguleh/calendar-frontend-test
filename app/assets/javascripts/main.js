@@ -6,6 +6,9 @@ window.onload = function (){
   //Set month and year
   setDate('calendar-my', month[d.getMonth()]+' '+currY);
   makeCalendar();
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 };
 
 //Function to handle the date (month-year and current date in calendar)
@@ -74,6 +77,16 @@ function makeCalendar () {
         //Create td with day number
         td = document.createElement("td");
         td.appendChild(document.createTextNode(m.toString()));
+        //Create festivity date
+        // if (true) {
+        //   f = document.createElement("a");
+        //   f.setAttribute("class", "holiday btn");
+        //   f.setAttribute("data-toggle", "tooltip");
+        //   f.setAttribute("data-placement", "right");
+        //   f.setAttribute("title", "Año Nuevo");
+        //   f.appendChild(document.createTextNode(m.toString()));
+        //   td.appendChild(f);
+        // }
         //Highlight current day
         if (d.getMonth() == currM && m == d.getDate()){
           td.setAttribute("class", "currDay")

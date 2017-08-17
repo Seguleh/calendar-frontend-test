@@ -152,6 +152,11 @@ table {
 }
 
 .currDay {
-  background-color: cornflowerblue;
+  background-color: #4e80db;
   color: white;
+}
+
+td > a {
+  text-decoration: none !important;
+  color: white !important;
 }
