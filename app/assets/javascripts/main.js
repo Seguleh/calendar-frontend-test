@@ -31,7 +31,7 @@ function changeDate(id) {
     //Remove old calendar
     $("#calendar").remove();
     //Build tbody of new calendar and apply Fade effect
-    $('<tbody id="calendar"></tbody>').fadeIn(1000).insertAfter("thead");
+    $('<tbody id="calendar"></tbody>').fadeIn(800).insertAfter("thead");
     makeCalendar();
   }else{
     //Decrement month or check if its January and reset with year decrement
@@ -45,7 +45,7 @@ function changeDate(id) {
     //Remove old calendar
     $("#calendar").remove();
     //Build tbody of new calendar and apply Fade effect
-    $('<tbody id="calendar"></tbody>').fadeIn(1000).insertAfter("thead");
+    $('<tbody id="calendar"></tbody>').fadeIn(800).insertAfter("thead");
     makeCalendar();
   }
 };
@@ -58,7 +58,7 @@ function makeCalendar () {
   // Get number of days in a month
   var monthS = new Date(currY, currM, 1);
   var monthE = new Date(currY, currM+1, 1);
-  var daysMonth = Math.round( (monthE - monthS) / (1000 * 60 * 60 * 24) );
+  var daysMonth = Math.round((monthE - monthS)/(1000*60*60*24));
   //Creating the days in a month, taking into account the firstDay of the week
   loop1:
    for (n = 1; n < 7; n++) {
