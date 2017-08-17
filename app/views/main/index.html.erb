@@ -1,2 +1,36 @@
-<h1>Boring blank Welcome Page</h1>
-<p>Found!</p>
+<h1 class="text-center">Calendar Example</h1>
+
+<div class="row">
+
+<div class="col-md-6 col-md-offset-3 center">
+
+  <table class="table">
+      <thead class="thead">
+          <tr>
+            <th colspan="7" class="center">
+                <a class="btn" id="prev" onclick="changeDate(this.id)"><i class="glyphicon glyphicon-chevron-left"></i></a>
+              	<a class="btn my" id="calendar-my"></a>
+              	<a class="btn" id="next" onclick="changeDate(this.id)"><i class="glyphicon glyphicon-chevron-right"></i></a>
+            </th>
+          </tr>
+          <tr>
+              <th>Sunday</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+          </tr>
+      </thead>
+      <tbody id="calendar">
+          <tr id="row1"></tr>
+          <tr id="row2"></tr>
+          <tr id="row3"></tr>
+          <tr id="row4"></tr>
+          <tr id="row5"></tr>
+      </tbody>
+  </table>
+</div>
+
+</div>
