@@ -7,7 +7,7 @@ window.onload = function (){
   makeCalendar();
 };
 
-//Function to handle the date (month-year)
+//Function to handle the date (month-year and current date in calendar)
 function setDate(id, val){
 
   document.getElementById(id).innerHTML = val;
@@ -64,6 +64,9 @@ function makeCalendar () {
       if (i > firstDay) {
         td = document.createElement("td");
         td.appendChild(document.createTextNode(m.toString()));
+        if (d.getMonth() == currM && m == d.getDate()){
+          td.setAttribute("class", "currDay")
+        }
         document.getElementById('row'+n).appendChild(td);
         m++;
       }else {
