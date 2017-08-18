@@ -1,8 +1,10 @@
 var month=['January','February','March','April','May','June','July','August','September','October','November','December'];
-var d=new Date(), currM=d.getMonth(), currY=d.getFullYear();
+var d=new Date(), currM=d.getMonth(), currY=d.getFullYear(), hDays;
 
 window.onload = function (){
 
+  //Fetch json
+  gJson();
   //Set month and year
   setDate('calendar-my', month[d.getMonth()]+' '+currY);
   makeCalendar();
@@ -17,6 +19,19 @@ function setDate(id, val){
   document.getElementById(id).innerHTML = val;
 };
 
+//Function to fetch JSON only when is first time loading page or when year changes
+function gJson() {
+
+  $.ajax({
+    url: "http://nolaborables.com.ar/api/v2/feriados/"+currY+"?incluir=opcional",
+    async: false,
+    dataType: 'json',
+    success: function(data) {
+        hDays = data;
+    }
+  });
+};
+
 // Function that handles the month-year change
 function changeDate(id) {
 
@@ -27,6 +42,7 @@ function changeDate(id) {
     if (currM == 11){
       currM=0;
       currY++;
+      gJson();
     }else{
       currM++;
     }
@@ -41,6 +57,7 @@ function changeDate(id) {
     if (currM == 0){
       currM=11;
       currY--;
+      gJson();
     }else{
       currM--;
     }
