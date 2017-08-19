@@ -47,12 +47,9 @@ function gJson() {
             $('#holiday-info'+$(this).text()).stop().fadeOut(500);
       });
     },
-    error: function(XMLHttpRequest, textStatus, errorThrown){
+    error: function(){
       //Show error message, with effects, if getting the JSON fails
       $(".alert").fadeIn(600).show().fadeTo(1800, 500).slideUp(500);
-      console.log(XMLHttpRequest);
-      console.log(textStatus);
-      console.log(errorThrown);
       hDays = [];
     }
   });
