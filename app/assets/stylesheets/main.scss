@@ -145,6 +145,22 @@ footer ul li {
 table {
    margin: auto;
    cursor: default;
+   border-collapse: separate !important;
+   table-layout: fixed;
+   display: none;
+}
+
+td {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+tr th {
+  text-align: center;
+}
+
+td:hover {
+  background-color: rgba(#2464d9, 0.56);
 }
 
 .my {
@@ -156,7 +172,16 @@ table {
   color: white;
 }
 
-td > a {
-  text-decoration: none !important;
-  color: white !important;
+.holiday {
+  border: solid;
+  border-width: 0.2em;
+  padding: 5px;
+  border-radius: 25%;
+  color: #5566e3;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.holiday:hover {
+  padding: 9px;
 }

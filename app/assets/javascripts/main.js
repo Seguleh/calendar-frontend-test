@@ -7,7 +7,9 @@ window.onload = function (){
   gJson();
   //Set month and year
   setDate('calendar-my', month[d.getMonth()]+' '+currY);
+  //Call the calendar maker
   makeCalendar();
+  //Enable Bootstrap tooltips for fast and convenient holiday info
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
@@ -19,20 +21,28 @@ function setDate(id, val){
   document.getElementById(id).innerHTML = val;
 };
 
-//Function to fetch JSON only when is first time loading page or when year changes
+//Function to fetch JSON only when it is the first time loading page or when year changes to enchance performance
 function gJson() {
 
+  //Handle JSON delay
+  $('#done').hide();
+  $('#loading').show();
+  //Get JSON with holiday information
   $.ajax({
     url: "http://nolaborables.com.ar/api/v2/feriados/"+currY+"?incluir=opcional",
-    async: false,
     dataType: 'json',
     success: function(data) {
         hDays = data;
+    },
+    complete: function(){
+      //Show calendar once holiday information is retrieved
+      $('#loading').hide();
+      $('#done').show();
     }
   });
 };
 
-// Function that handles the month-year change
+// Function that handles the month-year change to create said calendar
 function changeDate(id) {
 
   curr = document.getElementById('calendar-my').innerHTML.trim().split(" ")
@@ -70,6 +80,7 @@ function changeDate(id) {
   }
 };
 
+//Function to make the calendar, checking month days in relation to year
 function makeCalendar () {
 
   var i = m = 1;
@@ -95,12 +106,12 @@ function makeCalendar () {
         td = document.createElement("td");
         td.appendChild(document.createTextNode(m.toString()));
         //Create festivity date
-        // if (true) {
-        //   f = document.createElement("a");
-        //   f.setAttribute("class", "holiday btn");
+        // if (------) {
+        //   f = document.createElement("span");
+        //   f.setAttribute("class", "holiday");
         //   f.setAttribute("data-toggle", "tooltip");
         //   f.setAttribute("data-placement", "right");
-        //   f.setAttribute("title", "Año Nuevo");
+        //   f.setAttribute("title", title+" "+"("+type+")");
         //   f.appendChild(document.createTextNode(m.toString()));
         //   td.appendChild(f);
         // }
