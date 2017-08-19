@@ -32,12 +32,14 @@ function gJson() {
         hDays = data;
     },
     complete: function(){
-      //Show calendar once holiday information is retrieved
+      //Reset holidays
       var resetH = document.getElementById("holiday-texts");
       resetH.innerHTML = '';
+      //Show calendar once holiday information is retrieved
       makeCalendar();
       $('#loading').hide();
       $('#done').show();
+      //Show holiday on hover
       $('.holiday').hover(function(){
             $('#holiday-info'+$(this).text()).stop().fadeIn(500);
             }, function(){
@@ -139,13 +141,10 @@ function makeCalendar () {
             h.setAttribute("id", "holiday-info"+m);
             //Upercase on first char
             type = holD[0].tipo.charAt(0).toUpperCase() + holD[0].tipo.slice(1);
-            //Fix word
+            //Fix word if its "Nolaborable"
             type = type == "Nolaborable" ? "No Laborable" : type;
             h.innerHTML = holD[0].motivo+" "+"("+type.bold()+")";
             document.getElementById("holiday-texts").appendChild(h);
-            // f.setAttribute("data-toggle", "tooltip");
-            // f.setAttribute("data-placement", "right");
-            // f.setAttribute("title", holD[0].motivo+" "+"("+holD[0].tipo.charAt(0).toUpperCase() + holD[0].tipo.slice(1)+")");
             f.appendChild(document.createTextNode(m.toString()));
             td.appendChild(f);
           }
