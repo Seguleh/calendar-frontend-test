@@ -38,6 +38,10 @@ function gJson() {
       //Show calendar once holiday information is retrieved
       $('#loading').hide();
       $('#done').show();
+    },
+    error: function(){
+      //Show error message if get JSON fails
+      $(".alert").fadeIn(600).show().fadeTo(1800, 500).slideUp(500, function(){$(".alert").slideUp(500); });
     }
   });
 };
