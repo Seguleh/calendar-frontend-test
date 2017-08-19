@@ -7,14 +7,11 @@ window.onload = function (){
   gJson();
   //Set month and year
   setDate('calendar-my', month[d.getMonth()]+' '+currY);
-  //Call the calendar maker
-  makeCalendar();
   //Enable Bootstrap tooltips for fast and convenient holiday info
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
 };
-
 //Function to handle the date (month-year and current date in calendar)
 function setDate(id, val){
 
@@ -29,19 +26,28 @@ function gJson() {
   $('#loading').show();
   //Get JSON with holiday information
   $.ajax({
-    url: "http://nolaborables.com.ar/api/v2/feriados/"+currY+"?incluir=opcional",
+    url: "http://nolaborables.com.ar/api/v2/feriados/"+currY,
     dataType: 'json',
     success: function(data) {
         hDays = data;
     },
     complete: function(){
       //Show calendar once holiday information is retrieved
+      var resetH = document.getElementById("holiday-texts");
+      resetH.innerHTML = '';
+      makeCalendar();
       $('#loading').hide();
       $('#done').show();
+      $('.holiday').hover(function(){
+            $('#holiday-info'+$(this).text()).stop().fadeIn(500);
+            }, function(){
+            $('#holiday-info'+$(this).text()).stop().fadeOut(500);
+      });
     },
     error: function(){
-      //Show error message if get JSON fails
-      $(".alert").fadeIn(600).show().fadeTo(1800, 500).slideUp(500, function(){$(".alert").slideUp(500); });
+      //Show error message, with effects, if getting the JSON fails
+      $(".alert").fadeIn(600).show().fadeTo(1800, 500).slideUp(500);
+      hDays = [];
     }
   });
 };
@@ -49,7 +55,7 @@ function gJson() {
 // Function that handles the month-year change to create said calendar
 function changeDate(id) {
 
-  curr = document.getElementById('calendar-my').innerHTML.trim().split(" ")
+  var curr = document.getElementById('calendar-my').innerHTML.trim().split(" ")
   currM = month.indexOf(curr[0]);
   if(id == 'next'){
     //Increment month or check if its December and reset with year increment
@@ -59,13 +65,15 @@ function changeDate(id) {
       gJson();
     }else{
       currM++;
+      var resetH = document.getElementById("holiday-texts");
+      resetH.innerHTML = '';
+      makeCalendar();
+      $('.holiday').hover(function(){
+            $('#holiday-info'+$(this).text()).stop().fadeIn(500);
+            }, function(){
+            $('#holiday-info'+$(this).text()).stop().fadeOut(500);
+      });
     }
-    setDate('calendar-my', month[currM]+' '+currY);
-    //Remove old calendar
-    $("#calendar").remove();
-    //Build tbody of new calendar and apply Fade effect
-    $('<tbody id="calendar"></tbody>').fadeIn(800).insertAfter("thead");
-    makeCalendar();
   }else{
     //Decrement month or check if its January and reset with year decrement
     if (currM == 0){
@@ -74,20 +82,29 @@ function changeDate(id) {
       gJson();
     }else{
       currM--;
+      var resetH = document.getElementById("holiday-texts");
+      resetH.innerHTML = '';
+      makeCalendar();
+      $('.holiday').hover(function(){
+            $('#holiday-info'+$(this).text()).stop().fadeIn(500);
+            }, function(){
+            $('#holiday-info'+$(this).text()).stop().fadeOut(500);
+      });
     }
-    setDate('calendar-my', month[currM]+' '+currY);
-    //Remove old calendar
-    $("#calendar").remove();
-    //Build tbody of new calendar and apply Fade effect
-    $('<tbody id="calendar"></tbody>').fadeIn(800).insertAfter("thead");
-    makeCalendar();
   }
 };
 
 //Function to make the calendar, checking month days in relation to year
 function makeCalendar () {
 
-  var i = m = 1;
+  //Update month and year if applicable
+  setDate('calendar-my', month[currM]+' '+currY);
+  //Remove old calendar
+  $("#calendar").remove();
+  //Build tbody of new calendar and apply Fade effect
+  $('<tbody id="calendar"></tbody>').fadeIn(800).insertAfter("thead");
+
+  var i = m = 1, holD;
   // Get the first day of the week in set month and year: 0=Su, 1=Mo, 2=Tu, etc
   var firstDay = new Date(currY, currM, 1).getDay();
   // Get number of days in a month
@@ -108,17 +125,33 @@ function makeCalendar () {
       if (i > firstDay) {
         //Create td with day number
         td = document.createElement("td");
-        td.appendChild(document.createTextNode(m.toString()));
-        //Create festivity date
-        // if (------) {
-        //   f = document.createElement("span");
-        //   f.setAttribute("class", "holiday");
-        //   f.setAttribute("data-toggle", "tooltip");
-        //   f.setAttribute("data-placement", "right");
-        //   f.setAttribute("title", title+" "+"("+type+")");
-        //   f.appendChild(document.createTextNode(m.toString()));
-        //   td.appendChild(f);
-        // }
+        //Search for holiday
+        holD = hDays.filter(function(daysM){
+          return daysM.mes == currM+1 && m == daysM.dia;
+        });
+        //Create holiday date
+        if (typeof holD[0] != 'undefined'){
+          if (holD[0].dia == m) {
+            f = document.createElement("span");
+            f.setAttribute("class", "holiday");
+            h = document.createElement("p");
+            h.setAttribute("class", "eachH");
+            h.setAttribute("id", "holiday-info"+m);
+            //Upercase on first char
+            type = holD[0].tipo.charAt(0).toUpperCase() + holD[0].tipo.slice(1);
+            //Fix word
+            type = type == "Nolaborable" ? "No Laborable" : type;
+            h.innerHTML = holD[0].motivo+" "+"("+type.bold()+")";
+            document.getElementById("holiday-texts").appendChild(h);
+            // f.setAttribute("data-toggle", "tooltip");
+            // f.setAttribute("data-placement", "right");
+            // f.setAttribute("title", holD[0].motivo+" "+"("+holD[0].tipo.charAt(0).toUpperCase() + holD[0].tipo.slice(1)+")");
+            f.appendChild(document.createTextNode(m.toString()));
+            td.appendChild(f);
+          }
+        }else{
+          td.appendChild(document.createTextNode(m.toString()));
+        }
         //Highlight current day
         if (d.getMonth() == currM && m == d.getDate()){
           td.setAttribute("class", "currDay")
