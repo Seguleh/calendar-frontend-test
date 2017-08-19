@@ -26,7 +26,9 @@ function gJson() {
   $('#loading').show();
   //Get JSON with holiday information
   $.ajax({
+    type: "GET",
     url: "http://nolaborables.com.ar/api/v2/feriados/"+currY,
+    cache: false,
     dataType: 'json',
     success: function(data) {
         hDays = data;
