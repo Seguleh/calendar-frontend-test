@@ -175,6 +175,10 @@ td:hover:not(:empty) {
   color: white;
 }
 
+.currDay > span {
+  color: #242593;
+}
+
 .holiday {
   border: solid;
   border-width: 0.2em;

@@ -1,4 +1,4 @@
-var month=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var month=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var d=new Date(), currM=d.getMonth(), currY=d.getFullYear(), hDays;
 
 window.onload = function (){
@@ -6,7 +6,7 @@ window.onload = function (){
   //Fetch json
   gJson();
   //Set month and year
-  setDate('calendar-my', month[d.getMonth()]+' '+currY);
+  setDate("calendar-my", month[d.getMonth()]+' '+currY);
   //Enable Bootstrap tooltips for fast and convenient holiday info
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -22,8 +22,8 @@ function setDate(id, val){
 function gJson() {
 
   //Handle JSON delay
-  $('#done').hide();
-  $('#loading').show();
+  $("#done").hide();
+  $("#loading").show();
   //Get JSON with holiday information
   $.ajax({
     type: "GET",
@@ -38,13 +38,13 @@ function gJson() {
       resetH.innerHTML = '';
       //Show calendar once holiday information is retrieved
       makeCalendar();
-      $('#loading').hide();
-      $('#done').show();
+      $("#loading").hide();
+      $("#done").show();
       //Show holiday on hover
-      $('.holiday').hover(function(){
-            $('#holiday-info'+$(this).text()).stop().fadeIn(500);
+      $(".holiday").hover(function(){
+            $("#holiday-info"+$(this).text()).stop().fadeIn(500);
             }, function(){
-            $('#holiday-info'+$(this).text()).stop().fadeOut(500);
+            $("#holiday-info"+$(this).text()).stop().fadeOut(500);
       });
     },
     error: function(){
@@ -58,9 +58,9 @@ function gJson() {
 // Function that handles the month-year change to create said calendar
 function changeDate(id) {
 
-  var curr = document.getElementById('calendar-my').innerHTML.trim().split(" ")
+  var curr = document.getElementById("calendar-my").innerHTML.trim().split(" ")
   currM = month.indexOf(curr[0]);
-  if(id == 'next'){
+  if(id == "next"){
     //Increment month or check if its December and reset with year increment
     if (currM == 11){
       currM=0;
@@ -71,10 +71,10 @@ function changeDate(id) {
       var resetH = document.getElementById("holiday-texts");
       resetH.innerHTML = '';
       makeCalendar();
-      $('.holiday').hover(function(){
-            $('#holiday-info'+$(this).text()).stop().fadeIn(500);
+      $(".holiday").hover(function(){
+            $("#holiday-info"+$(this).text()).stop().fadeIn(500);
             }, function(){
-            $('#holiday-info'+$(this).text()).stop().fadeOut(500);
+            $("#holiday-info"+$(this).text()).stop().fadeOut(500);
       });
     }
   }else{
@@ -88,10 +88,10 @@ function changeDate(id) {
       var resetH = document.getElementById("holiday-texts");
       resetH.innerHTML = '';
       makeCalendar();
-      $('.holiday').hover(function(){
-            $('#holiday-info'+$(this).text()).stop().fadeIn(500);
+      $(".holiday").hover(function(){
+            $("#holiday-info"+$(this).text()).stop().fadeIn(500);
             }, function(){
-            $('#holiday-info'+$(this).text()).stop().fadeOut(500);
+            $("#holiday-info"+$(this).text()).stop().fadeOut(500);
       });
     }
   }
@@ -101,7 +101,7 @@ function changeDate(id) {
 function makeCalendar () {
 
   //Update month and year if applicable
-  setDate('calendar-my', month[currM]+' '+currY);
+  setDate("calendar-my", month[currM]+' '+currY);
   //Remove old calendar
   $("#calendar").remove();
   //Build tbody of new calendar and apply Fade effect
@@ -118,7 +118,7 @@ function makeCalendar () {
   loop1:
    for (n = 1; n < 7; n++) {
      //Creating new tr's with row id
-     r = document.getElementById('calendar').appendChild(document.createElement("tr"));
+     r = document.getElementById("calendar").appendChild(document.createElement("tr"));
      r.setAttribute("id", "row"+n);
     for (j = 0; j < 7; j++) {
       //Break loop if daysMonth is achieved
@@ -156,11 +156,11 @@ function makeCalendar () {
         if (d.getMonth() == currM && m == d.getDate()){
           td.setAttribute("class", "currDay")
         }
-        document.getElementById('row'+n).appendChild(td);
+        document.getElementById("row"+n).appendChild(td);
         m++;
       }else {
         //Create td without number to maintain aspect of calendar
-        document.getElementById('row'+n).appendChild(document.createElement("td"));
+        document.getElementById("row"+n).appendChild(document.createElement("td"));
       }
       i++;
     }
