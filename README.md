@@ -2,4 +2,4 @@
 
 Front-end using HTML, CSS, JavaScript and jQuery. 
 
-Done with Ruby on Rails framework and deployed on Heroku.
+Using Ruby on Rails as framework and deployed on Heroku.
