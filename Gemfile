@@ -22,6 +22,8 @@ gem 'jbuilder'
 # Dat bootstrap
 gem 'bootstrap-sass'
 
+gem "actionview", ">= 5.1.6.2"
+
 gem 'sprockets-rails'
 # Them jQs
 gem 'jquery-ui-rails'
